@@ -1,0 +1,1 @@
+# MOD-auto-vendor-trash
