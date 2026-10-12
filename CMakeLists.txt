@@ -20,10 +20,18 @@ endif()
 add_library(auto_vendor_policy STATIC src/vendor_policy.cpp)
 target_include_directories(auto_vendor_policy PUBLIC src)
 
+add_library(auto_vendor_settings STATIC src/vendor_settings.cpp)
+target_include_directories(auto_vendor_settings PUBLIC src)
+target_link_libraries(auto_vendor_settings PUBLIC auto_vendor_policy)
+
 add_executable(auto-vendor-trash src/main.cpp)
-target_link_libraries(auto-vendor-trash PRIVATE auto_vendor_policy forever_module_sdk)
+target_link_libraries(auto-vendor-trash PRIVATE auto_vendor_policy auto_vendor_settings forever_module_sdk)
 
 enable_testing()
 add_executable(policy_test tests/policy_test.cpp)
 target_link_libraries(policy_test PRIVATE auto_vendor_policy)
 add_test(NAME policy COMMAND policy_test)
+
+add_executable(settings_test tests/settings_test.cpp)
+target_link_libraries(settings_test PRIVATE auto_vendor_settings)
+add_test(NAME settings COMMAND settings_test)

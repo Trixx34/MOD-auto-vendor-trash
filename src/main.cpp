@@ -3,10 +3,13 @@
 // Usage: auto-vendor-trash <tier1-endpoint>. The core passes the endpoint when it spawns the module.
 
 #include "vendor_policy.h"
+#include "vendor_settings.h"
 
 #include "forever_module/module_client.h"
 
 #include <iostream>
+#include <unordered_map>
+#include <vector>
 
 int main(int argc, char** argv)
 {
@@ -28,10 +31,18 @@ int main(int argc, char** argv)
         return 1;
     }
 
-    // Defaults only: module config from the core is not wired up yet (core sends an empty config).
+    // Config arrives right after the handshake, so the policy is set before the hook is registered. A later
+    // re-delivery (on the Run() thread) updates it for the next loot. Warnings go to the module's stderr.
     auto_vendor::Policy policy;
+    client.OnConfig([&policy](std::unordered_map<std::string, std::string> const& config)
+    {
+        std::vector<std::string> warnings;
+        policy = auto_vendor::ParseVendorSettings(config, warnings);
+        for (std::string const& warning : warnings)
+            std::cerr << "auto-vendor-trash: config: " << warning << "\n";
+    });
 
-    client.OnNotify("PlayerScript.OnLootItem", [&client, policy](forever_module::EventNotify const& notify)
+    client.OnNotify("PlayerScript.OnLootItem", [&client, &policy](forever_module::EventNotify const& notify)
     {
         forever_module::PlayerItemLootedEvent const& loot = notify.player_item_looted();
 

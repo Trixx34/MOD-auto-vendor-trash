@@ -1,0 +1,9 @@
+# Settings for the auto-vendor-trash module. Copy this file to modules.d/auto-vendor-trash.conf in the same
+# directory as worldserver.conf. The core loads every .conf file there at start-up and sends each
+# Module.auto-vendor-trash.<Key> entry to the module, with the prefix removed.
+
+# Grey stacks worth less than this (whole copper, sell price times count) are kept. 0 sells every grey item.
+Module.auto-vendor-trash.MinValueCopper = 0
+
+# Item entries that are never sold, whatever their quality. Comma-separated.
+Module.auto-vendor-trash.ExcludedItemIds = ""
