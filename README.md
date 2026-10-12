@@ -2,8 +2,8 @@
 Init
 ## Configuration
 
-The core sends the `Module.auto-vendor-trash.<Key>` entries from `modules.d/auto-vendor-trash.conf` (next to
-`worldserver.conf`), with the prefix removed. See `config/modules.d/auto-vendor-trash.conf.example`:
+The core sends the `Module.auto-vendor-trash.<Key>` entries from `worldserver.conf.d/modules.d/auto-vendor-trash.conf`
+(under the config directory), with the prefix removed. See `config/modules.d/auto-vendor-trash.conf.example`:
 
 - `MinValueCopper` (default 0): grey stacks worth less than this, in copper (sell price times count), are kept.
 - `ExcludedItemIds` (default none): comma-separated item entries that are never sold.
