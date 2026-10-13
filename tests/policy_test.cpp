@@ -71,6 +71,16 @@ int main()
     CHECK(auto_vendor::FormatSaleMessage("Tattered Cloth", 10205) ==
           "[Tattered Cloth] was sold automatically, got 1g 2s 5c.");
 
+    // Sales summary: nothing sold gives no line; sales add up, the line says how many and what they were worth, and it starts again.
+    auto_vendor::SaleSummary summary;
+    CHECK(summary.Take(10).empty());
+    summary.Add(3, 120);
+    summary.Add(1, 10085);
+    CHECK(summary.Take(10) == "4 items sold in the last 10 minutes. Total value 1g 2s 5c.");
+    CHECK(summary.Take(10).empty());
+    summary.Add(1, 5);
+    CHECK(summary.Take(1) == "1 item sold in the last 1 minute. Total value 5c.");
+
     if (failures == 0)
     {
         std::printf("PASS  auto-vendor policy\n");

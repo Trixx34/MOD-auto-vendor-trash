@@ -7,6 +7,7 @@
 
 #include "forever_module/module_client.h"
 
+#include <chrono>
 #include <iostream>
 #include <unordered_map>
 #include <vector>
@@ -42,7 +43,20 @@ int main(int argc, char** argv)
             std::cerr << "auto-vendor-trash: config: " << warning << "\n";
     });
 
-    client.OnNotify("PlayerScript.OnLootItem", [&client, &policy](forever_module::EventNotify const& notify)
+    // What was sold since the last summary line. Sale replies and the timer both run on the Run() thread, so no lock is needed.
+    auto_vendor::SaleSummary summary;
+    if (policy.SummaryMinutes != 0)
+    {
+        std::uint32_t const minutes = policy.SummaryMinutes;
+        client.AddTimer(std::chrono::minutes(minutes), [&summary, minutes]
+        {
+            std::string const line = summary.Take(minutes);
+            if (!line.empty())
+                std::cerr << "auto-vendor-trash: " << line << "\n";
+        });
+    }
+
+    client.OnNotify("PlayerScript.OnLootItem", [&client, &policy, &summary](forever_module::EventNotify const& notify)
     {
         forever_module::PlayerItemLootedEvent const& loot = notify.player_item_looted();
 
@@ -57,8 +71,9 @@ int main(int argc, char** argv)
 
         std::uint64_t const playerGuid = loot.player_guid();
         std::string const itemName = loot.item_name();
+        std::uint32_t const soldCount = loot.count();
         client.SellItem(playerGuid, loot.item_guid(), loot.item_entry(), loot.count(),
-                        [&client, playerGuid, itemName](forever_module::ActionReply const& reply)
+                        [&client, &summary, playerGuid, itemName, soldCount](forever_module::ActionReply const& reply)
         {
             if (!reply.success())
             {
@@ -66,6 +81,7 @@ int main(int argc, char** argv)
                 std::cerr << "auto-vendor-trash: could not sell " << itemName << ": " << reply.reason() << "\n";
                 return;
             }
+            summary.Add(soldCount, reply.copper_gained());
             client.SendPlayerMessage(playerGuid, auto_vendor::FormatSaleMessage(itemName, reply.copper_gained()));
         });
     });

@@ -6,3 +6,7 @@ Module.auto-vendor-trash.MinValueCopper = 0
 
 # Item entries that are never sold, whatever their quality. Comma-separated.
 Module.auto-vendor-trash.ExcludedItemIds = ""
+
+# Minutes between summary lines in the module's log: "42 items sold in the last 10 minutes. Total value 1g 20s 5c." A period with no sale
+# writes nothing. 0 turns the line off.
+Module.auto-vendor-trash.SummaryMinutes = 10

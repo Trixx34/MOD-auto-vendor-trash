@@ -47,4 +47,15 @@ std::string FormatSaleMessage(std::string const& itemName, std::uint64_t copperG
     return "[" + itemName + "] was sold automatically, got " + FormatMoney(copperGained) + ".";
 }
 
+std::string SaleSummary::Take(std::uint32_t minutes)
+{
+    if (_items == 0)
+        return {};
+    std::string line = std::to_string(_items) + (_items == 1 ? " item" : " items") + " sold in the last " + std::to_string(minutes) +
+                       (minutes == 1 ? " minute" : " minutes") + ". Total value " + FormatMoney(_copper) + ".";
+    _items = 0;
+    _copper = 0;
+    return line;
+}
+
 } // namespace auto_vendor

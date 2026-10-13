@@ -55,6 +55,18 @@ void EmptyListIsNoExclusions()
     CHECK(warnings.empty());
 }
 
+void SummaryMinutes()
+{
+    std::vector<std::string> warnings;
+    CHECK(auto_vendor::ParseVendorSettings({}, warnings).SummaryMinutes == 10); // the default
+    CHECK(auto_vendor::ParseVendorSettings({ { "SummaryMinutes", "0" } }, warnings).SummaryMinutes == 0);
+    CHECK(auto_vendor::ParseVendorSettings({ { "SummaryMinutes", "30" } }, warnings).SummaryMinutes == 30);
+    CHECK(warnings.empty());
+    CHECK(auto_vendor::ParseVendorSettings({ { "SummaryMinutes", "5000" } }, warnings).SummaryMinutes == 10);
+    CHECK(auto_vendor::ParseVendorSettings({ { "SummaryMinutes", "soon" } }, warnings).SummaryMinutes == 10);
+    CHECK(warnings.size() == 2);
+}
+
 } // namespace
 
 int main()
@@ -63,6 +75,7 @@ int main()
     ReadsValues();
     BadValuesWarnAndKeepDefaults();
     EmptyListIsNoExclusions();
+    SummaryMinutes();
 
     if (failures == 0)
         std::printf("settings_test: all checks passed\n");

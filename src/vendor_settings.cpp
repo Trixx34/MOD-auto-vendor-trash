@@ -34,6 +34,15 @@ Policy ParseVendorSettings(std::unordered_map<std::string, std::string> const& c
             warnings.push_back("Module.auto-vendor-trash.MinValueCopper: '" + it->second + "' is not a whole number; using 0.");
     }
 
+    if (auto const it = config.find("SummaryMinutes"); it != config.end())
+    {
+        std::uint64_t value = 0;
+        if (ParseNumber(it->second, value) && value <= 1440)
+            policy.SummaryMinutes = static_cast<std::uint32_t>(value);
+        else
+            warnings.push_back("Module.auto-vendor-trash.SummaryMinutes: '" + it->second + "' is not a number of minutes from 0 to 1440; using 10.");
+    }
+
     if (auto const it = config.find("ExcludedItemIds"); it != config.end())
     {
         // Split on commas; spaces around entries are allowed, empty entries are ignored.

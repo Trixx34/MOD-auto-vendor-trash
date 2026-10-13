@@ -57,3 +57,8 @@ Without `FOREVER_MODULE_SDK_SOURCE`, CMake fetches `Trixx34/forever-module-sdk` 
 - `src/vendor_settings.{h,cpp}`: reads the config.
 - `src/main.cpp`: connects to the core, handles the loot event, sells and reports.
 - `tests/policy_test.cpp`, `tests/settings_test.cpp`: unit tests.
+
+## Sales summary
+
+Every `SummaryMinutes` minutes (default 10, `0` = off) the module writes one line to its log with what it sold in that time and what it was worth:
+`auto-vendor-trash: 42 items sold in the last 10 minutes. Total value 1g 20s 5c.` A period with no sale writes nothing.

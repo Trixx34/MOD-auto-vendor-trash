@@ -11,7 +11,8 @@
 
 namespace auto_vendor {
 
-// Keys: MinValueCopper (whole copper, default 0) and ExcludedItemIds (comma-separated item entries, default none).
+// Keys: MinValueCopper (whole copper, default 0), ExcludedItemIds (comma-separated item entries, default none) and SummaryMinutes
+// (0..1440, default 10; 0 turns the sales summary line off).
 // A bad value keeps the default and adds one line to warnings.
 Policy ParseVendorSettings(std::unordered_map<std::string, std::string> const& config, std::vector<std::string>& warnings);
 
