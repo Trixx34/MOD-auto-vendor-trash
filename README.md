@@ -40,7 +40,7 @@ A bad value keeps the default and writes a line to the module's stderr. A re-del
 ## Hooks and needs
 
 The module registers the Tier 1 hook `PlayerScript.OnLootItem` and uses the `SellItem` and `SendPlayerMessage` actions
-(`forever-module-sdk`, protocol 4). It needs a core with the module system.
+(`forever-module-sdk`, protocol 5). It needs a core with the module system.
 
 ## Build
 
