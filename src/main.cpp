@@ -48,11 +48,13 @@ int main(int argc, char** argv)
     if (policy.SummaryMinutes != 0)
     {
         std::uint32_t const minutes = policy.SummaryMinutes;
-        client.AddTimer(std::chrono::minutes(minutes), [&summary, minutes]
+        client.AddTimer(std::chrono::minutes(minutes), [&client, &summary, minutes]
         {
             std::string const line = summary.Take(minutes);
-            if (!line.empty())
-                std::cerr << "auto-vendor-trash: " << line << "\n";
+            if (line.empty())
+                return;
+            std::cerr << "auto-vendor-trash: " << line << "\n";
+            client.Log(0, line); // and to the core's Server.log, tagged with the module's name (an older core refuses it harmlessly)
         });
     }
 

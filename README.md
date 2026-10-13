@@ -61,4 +61,4 @@ Without `FOREVER_MODULE_SDK_SOURCE`, CMake fetches `Trixx34/forever-module-sdk` 
 ## Sales summary
 
 Every `SummaryMinutes` minutes (default 10, `0` = off) the module writes one line to its log with what it sold in that time and what it was worth:
-`auto-vendor-trash: 42 items sold in the last 10 minutes. Total value 1g 20s 5c.` A period with no sale writes nothing.
+`auto-vendor-trash: 42 items sold in the last 10 minutes. Total value 1g 20s 5c.` A period with no sale writes nothing. The same line goes to the core's `Server.log` as `[auto-vendor-trash] 42 items sold ...` (needs a core with the log action).
