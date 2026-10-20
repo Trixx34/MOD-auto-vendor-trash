@@ -24,7 +24,13 @@ add_library(auto_vendor_settings STATIC src/vendor_settings.cpp)
 target_include_directories(auto_vendor_settings PUBLIC src)
 target_link_libraries(auto_vendor_settings PUBLIC auto_vendor_policy)
 
+# The module version is written once, in module.json (pre-1.0 scheme 0.MINOR.PATCH, forever-ops docs/96-versioning.md); the build reads it into the manifest.
+file(READ "${CMAKE_CURRENT_SOURCE_DIR}/module.json" FOREVER_MODULE_JSON)
+string(JSON FOREVER_MODULE_VERSION GET "${FOREVER_MODULE_JSON}" version)
+set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/module.json")
+
 add_executable(auto-vendor-trash src/main.cpp)
+target_compile_definitions(auto-vendor-trash PRIVATE FOREVER_MODULE_VERSION="${FOREVER_MODULE_VERSION}")
 target_link_libraries(auto-vendor-trash PRIVATE auto_vendor_policy auto_vendor_settings forever_module_sdk)
 
 enable_testing()
