@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-2.0-or-later
 // Decides which looted items are auto-sold and formats the player-facing message. No SDK or core
 // dependencies, so it is unit-tested directly (tests/policy_test.cpp).
 #ifndef AUTO_VENDOR_POLICY_H

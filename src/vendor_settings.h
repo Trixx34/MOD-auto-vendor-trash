@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-2.0-or-later
 // Reads the auto-vendor policy from the module's config (Module.auto-vendor-trash.<Key>, see
 // config/modules.d/auto-vendor-trash.conf.example). No SDK dependency, so it is unit-tested (tests/settings_test.cpp).
 #ifndef AUTO_VENDOR_SETTINGS_H

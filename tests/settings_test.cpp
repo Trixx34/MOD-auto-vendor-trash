@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-2.0-or-later
 // Unit tests for ParseVendorSettings. No core needed.
 #include "vendor_settings.h"
 

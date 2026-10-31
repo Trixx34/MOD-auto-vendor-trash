@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: GPL-2.0-or-later
 cmake_minimum_required(VERSION 3.20)
 project(auto_vendor_trash LANGUAGES CXX)
 

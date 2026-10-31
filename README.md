@@ -62,3 +62,8 @@ Without `FOREVER_MODULE_SDK_SOURCE`, CMake fetches `Trixx34/forever-module-sdk` 
 
 Every `SummaryMinutes` minutes (default 10, `0` = off) the module writes one line to its log with what it sold in that time and what it was worth:
 `auto-vendor-trash: 42 items sold in the last 10 minutes. Total value 1g 20s 5c.` A period with no sale writes nothing. The same line goes to the core's `Server.log` as `[auto-vendor-trash] 42 items sold ...` (needs a core with the log action).
+
+## License
+
+This project is licensed under the GNU General Public License, version 2 or (at your option) any later version (`GPL-2.0-or-later`, see `LICENSE`).
+It is part of the Forever server, a fork of TrinityCore (GPL-2.0). Source files carry an SPDX identifier.

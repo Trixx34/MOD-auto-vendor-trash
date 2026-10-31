@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-2.0-or-later
 // auto-vendor-trash: sells looted grey items through the core's module actions.
 //
 // Usage: auto-vendor-trash <tier1-endpoint>. The core passes the endpoint when it spawns the module.
