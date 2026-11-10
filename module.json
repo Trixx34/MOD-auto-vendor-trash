@@ -1,7 +1,7 @@
 {
   "name": "auto-vendor-trash",
   "version": "0.4.1",
-  "protocol_version": "24",
+  "protocol_version": "25",
   "tier1": {
     "hooks": [
       "PlayerScript.OnLootItem"
